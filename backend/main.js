@@ -17,11 +17,12 @@ const NewsAPI = require("newsapi");
 const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API);
 
 let country = [];
-let shortCode = [];
+let shortCode = ['au'];
 let article = []
 let structuredArticles = [];
 
 var cors = require("cors");
+const { url } = require("inspector");
 app.use(cors());
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
@@ -116,10 +117,12 @@ app.get('/test', (req, res) => {
             urlToImage: e.urlToImage,
             author:e.author,
             description: e.description,
-            content: e.content
+            content: e.content,
+            url: e.url
+
     
         })
-        console.log(e.title)
+        console.log(e.source.id)
     })
      
     

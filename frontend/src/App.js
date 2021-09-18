@@ -10,7 +10,8 @@ import axios from "axios";
 import { env } from "process";
 import { PassThrough } from "stream";
 import { stat } from "fs";
-import Article from './Article';
+import Article from "./Article";
+import { RSA_NO_PADDING } from "constants";
 
 const server = "http.//localhost:3001/country";
 
@@ -24,10 +25,7 @@ const center = {
   lng: 5,
 };
 
-
-
 export default function App() {
-
   const [position, setPosition] = useState();
   const [status, setStatus] = useState(false);
   const [article, setArticle] = useState(null);
@@ -40,43 +38,34 @@ export default function App() {
   //Article modal status
   const openArticle = () => {
     setShowArticle(true);
-}
-
-
+  };
 
   //Get Lat and Lng information on user click to pass to Geocoding API
   const getLatLng = (e) => {
-    const test = JSON.stringify(e.latLng);
-    const parsedTest = JSON.parse(test);
+    const text = JSON.stringify(e.latLng);
+    const parsedText = JSON.parse(text);
 
-    setPosition(parsedTest);
+    setPosition(parsedText);
 
-    //Passing data to Server 
+    //Passing data to Server
     axios
-      .post("/country", parsedTest)
+      .post("/country", parsedText)
       .then((res) => {
         console.log(res);
-        
-        fetch('/test')
-        .then(res=>res.json())
-        .then((res) => {setArticle(res)
-        console.log("test" + res)
-        })
-        
+
+        fetch("/test")
+          .then((res) => res.json())
+          .then((res) => {
+            setArticle(res);
+            console.log("test" + res);
+          });
       })
       .catch((err) => {
         console.log("Client post error: " + err);
-
       });
-     
 
- 
-
-  
-  
-
-setShowArticle(!showArticle)
-};
+    setShowArticle(!showArticle);
+  };
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
@@ -85,7 +74,13 @@ setShowArticle(!showArticle)
   //<GoogleMap mapContainerStyle={mapContainerStyle}  zoom={3} options={{scrollwheel: false, zoomControl: false,gestureHandling: "none" }} center={center} onClick={(e)=>{getLatLng(e)}}></GoogleMap>
 
   return (
-    <div className="map">
+    <div className="app">
+      <nav>
+          <div className="navBar">
+            
+          </div>
+      </nav>
+      <div className="map">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={3}
@@ -93,6 +88,8 @@ setShowArticle(!showArticle)
           scrollwheel: false,
           zoomControl: false,
           gestureHandling: "none",
+          streetViewControl: false,
+          disableDefaultUI: true,
         }}
         center={center}
         onClick={(e) => {
@@ -100,14 +97,9 @@ setShowArticle(!showArticle)
         }}
       ></GoogleMap>
       <div className="modal-overly">
-
-        {
-          showArticle
-          ? <Article article={article} />
-          :null
-        }
-          
+        {showArticle ? <Article article={article} /> : null}
       </div>
+    </div>
     </div>
   );
 }

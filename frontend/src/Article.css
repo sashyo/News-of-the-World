@@ -16,10 +16,22 @@
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
     background: #fff;
     color: #000;
-    display: grid;
     position: absolute;
-    z-index: 10;
     border-radius: 10px;
     justify-content: center;
     border-style: solid; 
+    display: grid;
+    overflow: auto;
+    grid-template-columns: 1fr; /* it means we have only one column */
+    grid-auto-rows:min-content; /* the first row height is auto and the second is all the height left */ 
+}
+
+.container img{
+    width: 100%;
+}
+
+.container h1{
+    text-align: center;
+    height: fit-content;
+
 }
