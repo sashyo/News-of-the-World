@@ -30,6 +30,7 @@ export default function App() {
   const [status, setStatus] = useState(false);
   const [article, setArticle] = useState(null);
   const [showArticle, setShowArticle] = useState(false);
+  const [getArticles, setGetArticles] = useState(false);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -52,17 +53,11 @@ export default function App() {
       .post("/country", parsedText)
       .then((res) => {
         console.log(res);
-
-        fetch("/test")
-          .then((res) => res.json())
-          .then((res) => {
-            setArticle(res);
-            console.log("test" + res);
-          });
+        setArticle(res.data)
       })
       .catch((err) => {
         console.log("Client post error: " + err);
-      });
+      })
 
     setShowArticle(!showArticle);
   };
@@ -70,6 +65,19 @@ export default function App() {
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
   if (setPosition === undefined) console.log("Input not valid");
+
+  /*
+  if (getArticles === true){
+    console.log('testing country')
+    fetch("/test")
+          .then((res) => res.json())
+          .then((res) => {
+            setArticle(res);
+            console.log("test" + res);
+          });
+
+    setGetArticles(false);
+  } */
 
   //<GoogleMap mapContainerStyle={mapContainerStyle}  zoom={3} options={{scrollwheel: false, zoomControl: false,gestureHandling: "none" }} center={center} onClick={(e)=>{getLatLng(e)}}></GoogleMap>
 

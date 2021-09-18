@@ -17,7 +17,7 @@ const NewsAPI = require("newsapi");
 const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API);
 
 let country = [];
-let shortCode = ['au'];
+let shortCode = [];
 let article = []
 let structuredArticles = [];
 
@@ -34,15 +34,15 @@ app.use(express.static("../frontend/build"));
 
 //Get latitude and longitute from user input
 
-app.post("/country", function (req, res, next) {
+app.post("/country", async function (req, res, next) {
  
   const latLng = req.body.lat;
   country = req.body;
   console.log(country)
-  res.send('yes')
+  
 
   // get short code from latLng
-  client
+  await client
     .reverseGeocode({
       params: {
         key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -54,26 +54,16 @@ app.post("/country", function (req, res, next) {
       shortCode = r.data.results[0].address_components[0].short_name;
       console.log(shortCode)
 
+
       
     })
     .catch((e) => {
       console.log("Geocode API error" + e);
       
-    });
-})
-
-
-app.get('/test', (req, res) => {
-    
-
- 
-    // pass Geocode API result to News API for top arcticles
-
-    if(shortCode.length < 1){
-
-    newsapi.v2
+    }).then((e)=>{
+     newsapi.v2
     .topHeadlines({
-      country: 'au',
+      country: shortCode,
     })
     .then((r) => {
     article = r.articles
@@ -81,16 +71,18 @@ app.get('/test', (req, res) => {
     res.json(data)
     console.log("testing get"+ article)
 
-    article.map((e)=>{
+    await article.map((e)=>{
         structuredArticles.push({
             title: e.title,
             urlToImage: e.urlToImage,
             author:e.author,
             description: e.description,
-            content: e.content
+            content: e.content,
+            url: e.url
+
     
         })
-        console.log(e.title)
+        res.send(structuredArticles)
     })
      
     
@@ -100,7 +92,20 @@ app.get('/test', (req, res) => {
       console.log("News API error " + e);
       
     });
-}else{
+
+    }).catch((err)=>{console.log(err)})
+
+
+
+
+})
+
+/*
+
+
+app.get('/test', (req, res) => {
+    console.log(shortCode)
+    // pass Geocode API result to News API for top arcticles
     newsapi.v2
     .topHeadlines({
       country: shortCode,
@@ -132,9 +137,9 @@ app.get('/test', (req, res) => {
       console.log("News API error " + e);
       
     });
-}  
-})
 
+})
+*/
 
 
 
