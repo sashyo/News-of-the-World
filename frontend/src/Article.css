@@ -35,3 +35,19 @@
     height: fit-content;
 
 }
+
+.modalHeader{
+    height: 20px;
+    justify-content: start;
+    align-items: center;
+}
+
+.modalHeader a {
+    float: right;
+}
+
+.modalHeader svg{
+    height: 2em;
+    width: 2em;
+}
+

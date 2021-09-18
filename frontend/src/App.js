@@ -97,7 +97,7 @@ export default function App() {
         }}
       ></GoogleMap>
       <div className="modal-overly">
-        {showArticle ? <Article article={article} /> : null}
+        <Article article={article} showArticle={showArticle} setShowArticle={setShowArticle}/>
       </div>
     </div>
     </div>

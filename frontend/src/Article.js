@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./Article.css";
 import axios from "axios";
+import {AiOutlineClose} from 'react-icons/ai'
 
-export default function Article({ article }) {
+export default function Article({ article, setShowArticle, showArticle}) {
   //const {title, setTitle} = useState(null);
 
   /*
@@ -16,7 +17,14 @@ export default function Article({ article }) {
   useEffect(() => {}, []);
 
   return (
+    <>
+    {showArticle ?(
     <div class="container">
+      <div class='modalHeader'>
+        <a href='#' className='closeIcon'>
+          <AiOutlineClose onClick={()=> setShowArticle(prev => !prev)}/>
+        </a>
+      </div>
       <section>
         {article !== null
           ? article.map((e, i) => {
@@ -43,5 +51,11 @@ export default function Article({ article }) {
           : null}
       </section>
     </div>
-  );
+
+    )
+  :null
+  }
+  </>
+  )
+
 }
