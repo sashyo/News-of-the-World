@@ -17,13 +17,8 @@ const NewsAPI = require("newsapi");
 const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API);
 
 let country = [];
-<<<<<<< Updated upstream
-let shortCode = ['au'];
-let article = []
-=======
 let shortCode = [];
 let article = [];
->>>>>>> Stashed changes
 let structuredArticles = [];
 
 var cors = require("cors");
@@ -36,19 +31,10 @@ app.use(express.static("../frontend/build"));
 
 //Get latitude and longitute from user input
 
-<<<<<<< Updated upstream
-app.post("/country", function (req, res, next) {
- 
-  const latLng = req.body.lat;
-  country = req.body;
-  console.log(country)
-  res.send('yes')
-=======
 app.post("/country", async function (req, res, next) {
   const latLng = req.body.lat;
   country = req.body;
   structuredArticles = [];
->>>>>>> Stashed changes
 
   // get short code from latLng
   client
@@ -61,77 +47,6 @@ app.post("/country", async function (req, res, next) {
     })
     .then((r) => {
       shortCode = r.data.results[0].address_components[0].short_name;
-<<<<<<< Updated upstream
-      console.log(shortCode)
-
-      
-    })
-    .catch((e) => {
-      console.log("Geocode API error" + e);
-      
-    });
-})
-
-
-app.get('/test', (req, res) => {
-    
-
- 
-    // pass Geocode API result to News API for top arcticles
-
-    if(shortCode.length < 1){
-
-    newsapi.v2
-    .topHeadlines({
-      country: 'au',
-    })
-    .then((r) => {
-    article = r.articles
-    data = article
-    res.json(data)
-    console.log("testing get"+ article)
-
-    article.map((e)=>{
-        structuredArticles.push({
-            title: e.title,
-            urlToImage: e.urlToImage,
-            author:e.author,
-            description: e.description,
-            content: e.content
-    
-        })
-        console.log(e.title)
-    })
-     
-    
-  
-    })
-    .catch((e) => {
-      console.log("News API error " + e);
-      
-    });
-}else{
-    newsapi.v2
-    .topHeadlines({
-      country: shortCode,
-    })
-    .then((r) => {
-    article = r.articles
-    data = article
-    res.json(data)
-    console.log("testing get"+ article)
-
-    article.map((e)=>{
-        structuredArticles.push({
-            title: e.title,
-            urlToImage: e.urlToImage,
-            author:e.author,
-            description: e.description,
-            content: e.content,
-            url: e.url
-
-    
-=======
     })
     .catch((e) => {
       console.log("Geocode API error" + e);
@@ -162,7 +77,6 @@ app.get('/test', (req, res) => {
             });
           });
           res.json(structuredArticles);
->>>>>>> Stashed changes
         })
 
         .catch((e) => {
@@ -172,21 +86,7 @@ app.get('/test', (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-<<<<<<< Updated upstream
-}  
-})
-
-
-
-
-
-
-
-
-
-=======
 });
->>>>>>> Stashed changes
 
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));

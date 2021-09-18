@@ -64,10 +64,7 @@ export default function App() {
   if (!isLoaded) return "Loading Maps";
   if (setPosition === undefined) console.log("Input not valid");
 
-<<<<<<< Updated upstream
   //<GoogleMap mapContainerStyle={mapContainerStyle}  zoom={3} options={{scrollwheel: false, zoomControl: false,gestureHandling: "none" }} center={center} onClick={(e)=>{getLatLng(e)}}></GoogleMap>
-=======
->>>>>>> Stashed changes
 
   return (
     <div className="app">
@@ -77,25 +74,6 @@ export default function App() {
         </div>
       </nav>
       <div className="map">
-<<<<<<< Updated upstream
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={3}
-        options={{
-          scrollwheel: false,
-          zoomControl: false,
-          gestureHandling: "none",
-          streetViewControl: false,
-          disableDefaultUI: true,
-        }}
-        center={center}
-        onClick={(e) => {
-          getLatLng(e);
-        }}
-      ></GoogleMap>
-      <div className="modal-overly">
-        {showArticle ? <Article article={article} /> : null}
-=======
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={3}
@@ -115,7 +93,6 @@ export default function App() {
         <div className="modal-overly">
           <Article article={article} showArticle={showArticle} setShowArticle={setShowArticle} />
         </div>
->>>>>>> Stashed changes
       </div>
     </div>
   );
