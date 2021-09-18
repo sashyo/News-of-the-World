@@ -36,10 +36,7 @@ export default function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
-  //Article modal status
-  const openArticle = () => {
-    setShowArticle(true);
-  };
+
 
   //Get Lat and Lng information on user click to pass to Geocoding API
   const getLatLng = (e) => {
@@ -66,20 +63,7 @@ export default function App() {
   if (!isLoaded) return "Loading Maps";
   if (setPosition === undefined) console.log("Input not valid");
 
-  /*
-  if (getArticles === true){
-    console.log('testing country')
-    fetch("/test")
-          .then((res) => res.json())
-          .then((res) => {
-            setArticle(res);
-            console.log("test" + res);
-          });
-
-    setGetArticles(false);
-  } */
-
-  //<GoogleMap mapContainerStyle={mapContainerStyle}  zoom={3} options={{scrollwheel: false, zoomControl: false,gestureHandling: "none" }} center={center} onClick={(e)=>{getLatLng(e)}}></GoogleMap>
+  
 
   return (
     <div className="app">
@@ -98,6 +82,7 @@ export default function App() {
           gestureHandling: "none",
           streetViewControl: false,
           disableDefaultUI: true,
+          draggableCursor:'crosshair'
         }}
         center={center}
         onClick={(e) => {
