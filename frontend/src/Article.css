@@ -15,9 +15,10 @@
     height: 100vh;
     box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
     background: #fff;
-    color: #000;
+    border-color: #f1f1f1;
+    color: black;
     position: absolute;
-    border-radius: 10px;
+    border-radius: 5px;
     justify-content: center;
     border-style: solid; 
     display: grid;
@@ -34,4 +35,26 @@
     text-align: center;
     height: fit-content;
 
+<<<<<<< Updated upstream
 }
+=======
+}
+
+.modalHeader{
+    height: 20px;
+    justify-content: start;
+    align-items: center;
+    background: white;
+}
+
+.modalHeader a {
+    right: 50%;
+    position: fixed;
+}
+
+.modalHeader svg{
+    height: 2em;
+    width: 2em;
+}
+
+>>>>>>> Stashed changes

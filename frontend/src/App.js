@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -7,13 +7,9 @@ import {
 } from "@react-google-maps/api";
 import "./App.css";
 import axios from "axios";
-import { env } from "process";
-import { PassThrough } from "stream";
-import { stat } from "fs";
-import Article from "./Article";
-import { RSA_NO_PADDING } from "constants";
 
-const server = "http.//localhost:3001/country";
+import Article from "./Article";
+
 
 const mapContainerStyle = {
   width: "100vw",
@@ -35,10 +31,7 @@ export default function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
-  //Article modal status
-  const openArticle = () => {
-    setShowArticle(true);
-  };
+
 
   //Get Lat and Lng information on user click to pass to Geocoding API
   const getLatLng = (e) => {
@@ -71,16 +64,20 @@ export default function App() {
   if (!isLoaded) return "Loading Maps";
   if (setPosition === undefined) console.log("Input not valid");
 
+<<<<<<< Updated upstream
   //<GoogleMap mapContainerStyle={mapContainerStyle}  zoom={3} options={{scrollwheel: false, zoomControl: false,gestureHandling: "none" }} center={center} onClick={(e)=>{getLatLng(e)}}></GoogleMap>
+=======
+>>>>>>> Stashed changes
 
   return (
     <div className="app">
       <nav>
-          <div className="navBar">
-            
-          </div>
+        <div className="navBar">
+
+        </div>
       </nav>
       <div className="map">
+<<<<<<< Updated upstream
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={3}
@@ -98,8 +95,28 @@ export default function App() {
       ></GoogleMap>
       <div className="modal-overly">
         {showArticle ? <Article article={article} /> : null}
+=======
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={3}
+          options={{
+            scrollwheel: false,
+            zoomControl: false,
+            gestureHandling: "none",
+            streetViewControl: false,
+            disableDefaultUI: true,
+            draggableCursor: 'crosshair'
+          }}
+          center={center}
+          onClick={(e) => {
+            getLatLng(e);
+          }}
+        ></GoogleMap>
+        <div className="modal-overly">
+          <Article article={article} showArticle={showArticle} setShowArticle={setShowArticle} />
+        </div>
+>>>>>>> Stashed changes
       </div>
-    </div>
     </div>
   );
 }

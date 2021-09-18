@@ -17,8 +17,13 @@ const NewsAPI = require("newsapi");
 const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API);
 
 let country = [];
+<<<<<<< Updated upstream
 let shortCode = ['au'];
 let article = []
+=======
+let shortCode = [];
+let article = [];
+>>>>>>> Stashed changes
 let structuredArticles = [];
 
 var cors = require("cors");
@@ -27,19 +32,23 @@ app.use(cors());
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
-
 app.use(express.static("../frontend/build"));
-
-
 
 //Get latitude and longitute from user input
 
+<<<<<<< Updated upstream
 app.post("/country", function (req, res, next) {
  
   const latLng = req.body.lat;
   country = req.body;
   console.log(country)
   res.send('yes')
+=======
+app.post("/country", async function (req, res, next) {
+  const latLng = req.body.lat;
+  country = req.body;
+  structuredArticles = [];
+>>>>>>> Stashed changes
 
   // get short code from latLng
   client
@@ -52,6 +61,7 @@ app.post("/country", function (req, res, next) {
     })
     .then((r) => {
       shortCode = r.data.results[0].address_components[0].short_name;
+<<<<<<< Updated upstream
       console.log(shortCode)
 
       
@@ -121,17 +131,48 @@ app.get('/test', (req, res) => {
             url: e.url
 
     
-        })
-        console.log(e.source.id)
-    })
-     
-    
-  
+=======
     })
     .catch((e) => {
-      console.log("News API error " + e);
-      
+      console.log("Geocode API error" + e);
+    })
+    .then((e) => {
+      newsapi.v2
+        .topHeadlines({
+          country: shortCode,
+        })
+        .then((r) => {
+          article = r.articles;
+          data = article;
+
+          article.map((e) => {
+            {
+              e.description !== null && e.description.includes("<p>")
+              ? thisDescription = e.description.replace(/<p[^>]*>/g, "")
+              : thisDescription = e.description
+            }
+
+            structuredArticles.push({
+              title: e.title,
+              urlToImage: e.urlToImage,
+              author: e.author,
+              description: thisDescription,
+              content: e.content,
+              url: e.url,
+            });
+          });
+          res.json(structuredArticles);
+>>>>>>> Stashed changes
+        })
+
+        .catch((e) => {
+          console.log("News API error " + e);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
     });
+<<<<<<< Updated upstream
 }  
 })
 
@@ -143,11 +184,14 @@ app.get('/test', (req, res) => {
 
 
 
+=======
+});
+>>>>>>> Stashed changes
 
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
 app.listen(port, () => {
-  console.log(`App is listening on port {$port}`);
+  console.log(`App is listening on port ${port}`);
 });
