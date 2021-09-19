@@ -5,4 +5,15 @@ html, body{
 
 .map{
  width: 100%;
+ top:10px;
+}
+
+.navBar{
+  overflow: hidden;
+  background-color: white;
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  z-index: 1;
+  text-align: center;
 }

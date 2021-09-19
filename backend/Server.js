@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../frontend/.env" });
 
 const express = require("express");
 const app = express();
@@ -9,12 +9,13 @@ const { Client } = require("@googlemaps/google-maps-services-js");
 
 const port = 3001;
 
-//Google Geocoding API
+// Google Geocoding API
 const client = new Client({});
+const googleMapsApiKey = "AIzaSyB3ipyBxLMjZReSJ9BC1x6TrVARnI85Y70";
 
-//News API
+// News API
 const NewsAPI = require("newsapi");
-const newsapi = new NewsAPI(process.env.REACT_APP_NEWS_API);
+const newsapi = new NewsAPI("7941c57526024943a3cb8a7c56d4affa");
 
 let country = [];
 let shortCode = [];
@@ -29,18 +30,19 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(express.static("../frontend/build"));
 
-//Get latitude and longitute from user input
-
+// Get latitude and longitute from Google Maps API user input
 app.post("/country", async function (req, res, next) {
   const latLng = req.body.lat;
   country = req.body;
+
+  // Initialise article array
   structuredArticles = [];
 
-  // get short code from latLng
+  // Resolve State Code from latitude and longtitude with Google Geocode Api
   client
     .reverseGeocode({
       params: {
-        key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        key: googleMapsApiKey,
         latlng: country,
         result_type: ["country"],
       },
@@ -52,6 +54,7 @@ app.post("/country", async function (req, res, next) {
       console.log("Geocode API error" + e);
     })
     .then((e) => {
+      // Get topheadline of a country using News API
       newsapi.v2
         .topHeadlines({
           country: shortCode,
@@ -60,11 +63,12 @@ app.post("/country", async function (req, res, next) {
           article = r.articles;
           data = article;
 
+          // Restructure receive data from API to serve to client
           article.map((e) => {
             {
               e.description !== null && e.description.includes("<p>")
-              ? thisDescription = e.description.replace(/<p[^>]*>/g, "")
-              : thisDescription = e.description
+                ? (thisDescription = e.description.replace(/<p[^>]*>/g, ""))
+                : (thisDescription = e.description);
             }
 
             structuredArticles.push({
@@ -76,6 +80,7 @@ app.post("/country", async function (req, res, next) {
               url: e.url,
             });
           });
+          // Send articles back to client side
           res.json(structuredArticles);
         })
 
