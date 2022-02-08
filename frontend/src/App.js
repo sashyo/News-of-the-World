@@ -21,7 +21,7 @@ export default function App() {
   const [showArticle, setShowArticle] = useState(false);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyB3ipyBxLMjZReSJ9BC1x6TrVARnI85Y70',
+    googleMapsApiKey: '',
   });
 
 
