@@ -11,11 +11,11 @@ const port = 3001;
 
 // Google Geocoding API
 const client = new Client({});
-const googleMapsApiKey = "AIzaSyB3ipyBxLMjZReSJ9BC1x6TrVARnI85Y70";
+const googleMapsApiKey = "";
 
 // News API
 const NewsAPI = require("newsapi");
-const newsapi = new NewsAPI("7941c57526024943a3cb8a7c56d4affa");
+const newsapi = new NewsAPI("");
 
 let country = [];
 let shortCode = [];
